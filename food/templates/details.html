@@ -1,0 +1,32 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Details about {{ item.item_name }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <img src="{{ item.item_image }}" class="card-img-top" height="300px" alt="{{ item.item_name }}">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4 p-3 shadow-sm">
+                <div class="card-body">
+                    <h1 class="card-title">{{ item.item_name }}</h1>
+                    <h5 class="card-subtitle mb-2 text-muted">By: {{ item.username }}</h5>
+                    <h3>Description:</h3>
+                    <p class="card-text">{{ item.item_des }}</p>
+                    <h3>Price: <span class="text-success">{{ item.price }}$</span></h3>
+                    <div class="d-flex">
+                        <a href="/food/deleting/{{ item.id }}" class="btn btn-danger me-2">Delete</a>
+                        <a href="/food/items" class="btn btn-primary">Back to Items</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

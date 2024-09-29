@@ -1,0 +1,22 @@
+{% extends 'master.html' %}
+
+{% block title %}
+  Profile
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h1>{{ user.username }}</h1>
+                </div>
+                <div class="card-body text-center">
+                    <img src="{{ user.profile.image.url }}" class="img-fluid rounded" width="300" height="400" alt="{{ user.username }}'s profile picture">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

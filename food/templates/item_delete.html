@@ -1,0 +1,29 @@
+{% extends 'master.html' %}
+
+{% block title %}
+  Deleting
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h2>Confirm Deletion</h2>
+                </div>
+                <div class="card-body text-center">
+                    <h4>Are you sure you want to delete <strong>{{ item.item_name }}</strong>?</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-danger">Confirm</button>
+                            <a href="/food/items" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

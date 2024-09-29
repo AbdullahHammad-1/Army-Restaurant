@@ -1,0 +1,23 @@
+{% extends 'master.html' %}
+
+{% block title %}
+  My Restaurant
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-center">
+                    <h1 class="mb-0">My Restaurant Menu</h1>
+                </div>
+                <div class="card-body">
+                    <h2>Items</h2>
+                    <p>Check out all our <a href="/food/items" class="btn btn-primary">Items</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
