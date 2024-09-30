@@ -1,16 +1,18 @@
 from lib2to3.fixes.fix_input import context
+from django.contrib import messages
 from tempfile import template
 from wsgiref.util import request_uri
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.template.context_processors import request
-
+from django.urls import reverse_lazy
 from .models import Item
+import os
 from django.template import loader
 from .forms import ItemForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 # Create your views here.
 
@@ -63,7 +65,8 @@ class CreateItem(CreateView):
     login_required = True
     template_name = 'item_form.html'
 
-    def form_valid(self, form):
+    def form_valid(self, form): # Store the old image path
+        self.request.FILES.get('item_image')
         form.instance.username = self.request.user
 
         return super().form_valid(form)
@@ -71,12 +74,33 @@ class CreateItem(CreateView):
 
 @login_required
 def editing(request, id):
-    item = Item.objects.get(id=id)
-    form = ItemForm(request.POST or None, instance=item)
-    if form.is_valid():
-        form.save()
-        return redirect('items')
-    return render(request, 'item_form.html', {"form": form, "item": item})
+    item = get_object_or_404(Item, pk=id)  # Fetch the item to edit
+
+    if request.method == 'POST':
+        form = ItemForm(request.POST, instance=item)  # Pass the instance here
+        if form.is_valid():
+            form.save()  # Saves the changes to the existing item
+            return redirect('details', id=id)
+    else:
+        form = ItemForm(instance=item)  # Pass the instance here for GET requests
+
+    return render(request, 'edit_form.html', {'form': form, 'item': item})
+
+
+class Editing(UpdateView):
+    model = Item
+    fields = ['item_name', 'item_des', 'price', 'item_image']
+    template_name = 'edit_form.html'
+    login_required = True
+    success_url = reverse_lazy('items')  # redirect after success
+
+    def form_valid(self, form):
+        old_image = self.object.item_image.path  # Store the old image path
+        if self.request.FILES.get('item_image'):  # Check if there's a new image
+            if os.path.exists(old_image):  # If the old image exists, delete it
+                os.remove(old_image)
+        messages.success(self.request, "The item was updated successfully.")
+        return super().form_valid(form)
 
 
 @login_required

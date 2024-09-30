@@ -13,7 +13,27 @@
                     <h1>{{ user.username }}</h1>
                 </div>
                 <div class="card-body text-center">
+                    <!-- Profile Image -->
                     <img src="{{ user.profile.image.url }}" class="img-fluid rounded" width="300" height="400" alt="{{ user.username }}'s profile picture">
+
+                    <!-- Bio Section -->
+                    <div class="mt-3">
+                        <h5>Bio:</h5>
+                        <p>{{ user.profile.bio|default:"No bio available." }}</p> <!-- Display bio or a default message -->
+                    </div>
+
+                    <!-- Location Section -->
+                    <div class="mt-3">
+                        <h5>Location:</h5>
+                        <p>{{ user.profile.location|default:"Location not provided." }}</p> <!-- Display location or default message -->
+                    </div>
+
+                    <!-- Edit Profile button -->
+                    <div class="mt-4">
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+                            Edit Profile
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

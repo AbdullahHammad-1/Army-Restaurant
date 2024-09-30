@@ -12,7 +12,7 @@
     {% for i in item_list %}
     <div class="row mb-4">
         <div class="col-md-3 offset-md-2">
-            <img class="card-img-top img-fluid rounded shadow-sm" height="150px" src="{{ i.item_image }}" alt="{{ i.item_name }}">
+            <img height="150px" src="{{ i.item_image.url }}" alt="{{ i.item_name }}">
         </div>
         <div class="col-md-4">
             <h3>{{ i.item_name }}</h3>
